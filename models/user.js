@@ -34,16 +34,16 @@ const UserSchema = Schema({
     country: {
         type: String
     },
+    tokens: [{ type: Object }],
     role: {
         type: Schema.Types.ObjectId,
         ref: 'roles',
         required: [true, 'El rol es requerido']
     }
-
 })
 
 UserSchema.methods.toJSON = function () {
-    const { __v, password, _id, ...user } = this.toObject();
+    const { __v, password, _id,tokens, ...user } = this.toObject();
     user.uid = _id;
     return user;
 }

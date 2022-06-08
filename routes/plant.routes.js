@@ -1,15 +1,18 @@
 const { check } = require('express-validator');
 const { Router } = require('express');
 const { registerPlant, getPlants, deletePlant } = require('../controllers/plant.controller');
-const { validationBody } = require('../middlewares/validaton');
 const { plantExits } = require('../helpers/db-validation');
-const { validateJWT } = require('../middlewares/validation-jwt');
+
+const { validationBody, validateJWT, hasRole } = require('../middlewares');
+
 
 const router = Router();
 
 
 router.post('/',
     [
+        validateJWT,
+        hasRole('admin'),
         check('name').not().isEmpty(),
         check('description').not().isEmpty(),
         check('price').isNumeric(),
@@ -25,6 +28,7 @@ router.post('/',
 router.get('/',
     [
         validateJWT,
+        hasRole('admin'),
         check('page', 'La pagina debe ser un numero').isNumeric().optional(),
         validationBody
     ]
@@ -32,6 +36,8 @@ router.get('/',
 
 router.delete('/:id',
     [
+        validateJWT,
+        hasRole('admin'),
         check('id', 'No es un id valid').isMongoId(),
         check('id').custom(plantExits),
         validationBody,
