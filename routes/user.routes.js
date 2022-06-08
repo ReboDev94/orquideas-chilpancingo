@@ -1,13 +1,14 @@
 const { check } = require('express-validator');
 const { Router } = require('express');
+
 const {
     registerUser,
     editUser
 } = require('../controllers/user.controller');
 
-const { emailExits, userExits } = require('../helpers/db-validation');
-const { validationBody } = require('../middlewares/validaton');
-const { validateJWT } = require('../middlewares/validation-jwt');
+const { emailExits } = require('../helpers/db-validation');
+
+const {validationBody,validateJWT} = require('../middlewares');
 const router = Router();
 
 

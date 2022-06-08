@@ -9,6 +9,10 @@ Cree los roles necesarios - Document roles
 {
     "name":"Usuario normal",
     "slug":"normal"
+},
+{
+    "name":"Usuario administrador",
+    "slug":"admin"
 }
 ```
 

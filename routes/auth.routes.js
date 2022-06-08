@@ -1,8 +1,8 @@
 const { check } = require('express-validator');
 const { Router } = require('express');
-const { login, user } = require('../controllers/auth.controller');
-const { validationBody } = require('../middlewares/validaton');
-const { validateJWT } = require('../middlewares/validation-jwt');
+const { login, logout, user } = require('../controllers/auth.controller');
+const { validationBody, validateJWT } = require('../middlewares');
+
 
 const router = Router();
 router.post('/login',
@@ -11,6 +11,8 @@ router.post('/login',
         check('password', 'La contraseña es obligatorioa').not().isEmpty(),
         validationBody]
     , login);
+
+router.post('/logout', [validateJWT], logout);
 
 router.get('/user', [
     validateJWT
